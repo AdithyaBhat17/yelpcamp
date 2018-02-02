@@ -23,6 +23,10 @@ router.post("/",isLoggedIn, function(req, res){
     var price = req.body.price;
     var desc = req.body.description;
     geocoder.geocode(req.body.location, function (err, data) {
+        if (err || data.status === 'ZERO_RESULTS') {
+            req.flash('error', 'Invalid address, try typing a new address');
+            return res.redirect('back');
+        }
         var lat = data.results[0].geometry.location.lat;
         var lng = data.results[0].geometry.location.lng;
         var location = data.results[0].formatted_address;
@@ -72,6 +76,10 @@ router.get("/:id/edit",isLoggedIn, function(req, res){
 //UPDATE
 router.put("/:id",function(req, res){
     geocoder.geocode(req.body.campground.location, function (err, data) {
+        if (err || data.status === 'ZERO_RESULTS') {
+            req.flash('error', 'Invalid address, try typing a new address');
+            return res.redirect('back');
+        }
         var lat = data.results[0].geometry.location.lat;
         var lng = data.results[0].geometry.location.lng;
         var location = data.results[0].formatted_address; 
