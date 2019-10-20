@@ -21,48 +21,31 @@
                             <strong><%= comment.author %></strong>
                             <span class="pull-right">10 days ago</span>
                             <p>
-                                <%= comment.text %> 
+                                <%= comment.text %>
                             </p>
-                            
+
                         </div>
                     </div>
                 <% }) %>
             </div>
         </div>
         <div class="col-md-3">
-            <p class="lead" id="yelpcamp">YelpCamp</p>
-            <div id="map">
+            <p class="lead" id="yelpcamp">Other campgrounds</p>
+            <div class="thumbnail card">
+              <% allCampgrounds.forEach(function(camp){ %>
+                <% if(camp.name !== campground.name) { %>
+                  <p class="link">
+                    <a href="/campgrounds/<%= camp._id %>"><%= camp.name %></a>
+                  </p>
+                <% } %>
+              <% }) %>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    function initMap() {
-        var lat = <%= campground.lat %>;
-        var lng = <%= campground.lng %>;
-        var center = {lat: lat, lng: lng };
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 8,
-            center: center,
-            scrollwheel: false
-        });
-        var contentString = `
-      <strong><%= campground.name %><br />
-      <%= campground.location %></strong>
-      <p><%= campground.description %></p>
-    `
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString
-        });
-        var marker = new google.maps.Marker({
-            position: center,
-            map: map
-        });
-        marker.addListener('click', function() {
-            infowindow.open(map, marker);
-        });
-    }
+  console.log(<%= allCampgrounds %>)
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwgxA8vmxLUv6QGs6rn3Sx6KdlTJGbK6A&callback=initMap"></script>
+
 <% include ../partials/footer %>

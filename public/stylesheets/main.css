@@ -19,7 +19,16 @@ body{
 
 .thumbnail{
     padding:0;
+    background-color: #fff;
     border-radius:0;
+}
+
+.card {
+  padding: 10px;
+}
+
+.link > a {
+  font-weight: 500;
 }
 
 .caption-full{
@@ -132,7 +141,7 @@ input.btn-primary:hover{
     box-shadow:0 2px rgba(0, 0, 0, 1);
     border:0;
     top:2px;
-} 
+}
 
 
 
@@ -164,8 +173,8 @@ input.btn-primary:focus{
         padding-bottom:0;
     }
     #map{
-        width:100%;    
-    
+        width:100%;
+
     }
     .jumbotron{
     background:rgba(255, 255, 255, 0.7);
@@ -182,13 +191,13 @@ input.btn-primary:focus{
         padding-left:10px;
         padding-right: 10px;
     }
-    
+
     .form-control{
         background:rgba(255, 255, 255, 0.7);
         border:1px solid grey;
         border-radius:0;
     }
-    
+
     .frm-link{
         text-decoration: none;
         cursor:pointer;
@@ -197,11 +206,11 @@ input.btn-primary:focus{
     #campground-header{
         display:none;
     }
-    
+
     #comment-header{
         margin:5vh auto;
     }
-    
+
     .frm-edit{
     width:90%;
     padding:5px;

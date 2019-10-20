@@ -11,13 +11,13 @@ var express     = require("express"),
     flash =require("connect-flash"),
     User        = require("./models/user"),
     seedDB      = require("./seeds");
-    
+
 var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index");
-    
+
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://AdithyaBhat:Rusty@ds111476.mlab.com:11476/yelpcamp_adithya");
+mongoose.connect("mongodb://AdithyaBhat:Rusty@ds111476.mlab.com:11476/yelpcamp_adithya", { useNewUrlParser: true });
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -52,6 +52,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(8080, function(){
    console.log("The YelpCamp Server Has Started!");
 });
