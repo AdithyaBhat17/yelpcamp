@@ -3,20 +3,8 @@ var router  = express.Router({mergeParams: true});
 var Campground = require("../models/campground");
 var Comment = require("../models/comment");
 
-//Comments New
-router.get("/new", isLoggedIn, function(req, res){
-    // find campground by id
-    console.log(req.params.id);
-    Campground.findById(req.params.id, function(err, campground){
-        if(err){
-            console.log(err);
-        } else {
-             res.render("comments/new", {campground: campground});
-        }
-    })
-});
-
 //Comments Create
+// @todo send added comment as response instead of redirecting to campgrounds view
 router.post("/",isLoggedIn,function(req, res){
    //lookup campground using ID
    Campground.findById(req.params.id, function(err, campground){
