@@ -20,7 +20,6 @@ router.post("/register", function(req, res){
 
 //handling login logic
 router.post("/login", passport.authenticate("local"), function(req, res){
-  console.log(req)
   res.send({success: true, username: req.user.username})
 });
 
@@ -36,7 +35,6 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    req.flash("error","Please Login First!");
     res.send({success: false, err:{message: 'Please log in to continue'}});
 }
 
