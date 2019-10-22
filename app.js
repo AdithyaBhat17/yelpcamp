@@ -5,9 +5,9 @@ var express     = require("express"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"), // using to support PUT method.
-    passportLocalMongoose = require("passport-local-mongoose"),
-    Campground  = require("./models/campground"),
-    Comment     = require("./models/comment"),
+    // passportLocalMongoose = require("passport-local-mongoose"),
+    // Campground  = require("./models/campground"),
+    // Comment     = require("./models/comment"),
     User        = require("./models/user"),
     seedDB      = require("./seeds");
 
