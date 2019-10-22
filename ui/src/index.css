@@ -12,8 +12,12 @@ code {
     monospace;
 }
 
+img {
+  max-width: 100%;
+}
+
 .unsplash_background {
-  margin: 0;
+  margin: 0 auto 25px;
   padding: 50px 0;
   text-align: center;
   background-image: url('https://images.unsplash.com/photo-1520824071669-892f70d8a23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1897&q=80');
@@ -28,4 +32,23 @@ code {
   display: block;
   margin: 25px auto;
   width: 30%;
+}
+
+.campground-cards {
+  margin-top: 15px;
+  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding-bottom: 2px;
+  text-align: center;
+}
+
+.thumbnail-img {
+  width: 100%;
+  height: 150px;
+}
+
+.card-p:first-of-type {
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 0;
 }

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-export const useFetch = (url: string) => {
-    const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+export const useFetch: any = (url: string) => {
+    const [data, setData] = useState<any>(undefined)
+    const [loading, setLoading] = useState<boolean>(false)
 
     useEffect(() => {
         // loading set to true for spinner to show up
