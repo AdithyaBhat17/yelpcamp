@@ -67,7 +67,22 @@ img {
 .comment {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+}
+
+.comment-box {
+  margin-bottom: 10px;
+}
+
+.error-input {
+  border: 1px solid #ff0000;
+}
+
+.error-text {
+  color: #ff0000;
+  display: block;
+  margin-bottom: 5px;
 }

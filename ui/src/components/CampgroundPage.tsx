@@ -22,7 +22,7 @@ const Campground = ({match}: RouteComponentProps<TParams>) => {
                 <p>
                     {campground.description}
                 </p>
-                <Comments comments={campground.comments}/>
+                <Comments comments={campground.comments} campgroundName={campground.name}/>
             </div>
         </div>
     )
