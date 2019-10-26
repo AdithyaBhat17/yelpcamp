@@ -1,5 +1,5 @@
 import React from "react";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { useFetch } from "../hooks/useFetch";
 import Comments from "./Comments";
 
@@ -22,11 +22,11 @@ const Campground = ({match}: RouteComponentProps<TParams>) => {
                 <p>
                     {campground.description}
                 </p>
-                <Comments comments={campground.comments} campgroundName={campground.name}/>
+                {campground.comments && <Comments comments={campground.comments} campgroundName={campground.name}/>}
             </div>
         </div>
     )
 } 
 
-export default Campground
+export default withRouter(Campground)
 
