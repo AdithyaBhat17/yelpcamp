@@ -5,6 +5,7 @@ var express     = require("express"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"), // using to support PUT method.
+    cors = require('cors'),
     // passportLocalMongoose = require("passport-local-mongoose"),
     // Campground  = require("./models/campground"),
     // Comment     = require("./models/comment"),
@@ -22,6 +23,7 @@ mongoose.connect("mongodb://AdithyaBhat:Rusty@ds111476.mlab.com:11476/yelpcamp_a
 });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 // seedDB(); // use this to fill your db with default data.
 
 //passport config

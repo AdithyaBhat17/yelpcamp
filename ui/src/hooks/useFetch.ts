@@ -10,6 +10,7 @@ export const useFetch = (url: string) => {
         // make the api call
         fetch(url, {
             method: 'GET',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -22,6 +23,11 @@ export const useFetch = (url: string) => {
         })
         // where the sadness hits the roof
         .catch(error => console.error(error))
+
+        return () => {
+            setData(undefined)
+            setLoading(false)
+        }
     }, [url]) // dependency array to call the lifecycle event once again if the url changes.
 
     // return these bad boys to the RFC.
