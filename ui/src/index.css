@@ -87,7 +87,7 @@ img {
   margin-bottom: 5px;
 }
 
-.auth-form {
+.auth-form, .campground-form > form {
   margin: 0 auto;
   width: 30%;
 }
