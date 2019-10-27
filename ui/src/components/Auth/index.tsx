@@ -5,7 +5,7 @@ interface Props extends RouteComponentProps {
     purpose: string;
 }
 // @todo create username context 
-const Auth: React.FC<Props> = ({purpose, history}) => {
+const Auth: React.FC<Props> = ({purpose, history, location}) => {
 
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -19,6 +19,7 @@ const Auth: React.FC<Props> = ({purpose, history}) => {
         }
         fetch(`http://localhost:8080/${purpose}/`, {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -28,7 +29,7 @@ const Auth: React.FC<Props> = ({purpose, history}) => {
         .then(data => {
             if(data && data.success) {
                 sessionStorage.setItem('hello', data.username)
-                history.push('/')
+                history.push(`${location.state ? location.state.from : '/'}`)
                 setError('')
             } else
                 setError('Something went wrong :(')
