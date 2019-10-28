@@ -1,11 +1,11 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useState, useReducer, FormEvent } from 'react'
 import { RouteComponentProps, Redirect } from 'react-router'
 import { useFetch } from '../hooks/useFetch'
 
 const initialState = {
     name: '',
     description: '',
-    image: '',
+    file: '',
     price: ''
 }
 
@@ -16,20 +16,53 @@ const inputReducer = (state = initialState, action: { type: string, field: any }
                 ...state,
                 [action.field.name]: action.field.value
             }
+        case 'file':   
+            return {
+                ...state,
+                file: action.field
+            }
         default: 
             return state
     } 
 }
 
-const AddCampground = ({}: RouteComponentProps) => {
+const AddCampground = ({history}: RouteComponentProps) => {
 
     let [data, loading] = useFetch('http://localhost:8080/authorized/')
+    const [error, setError] = useState<string>('')
     const [state, dispatch] = useReducer(inputReducer, initialState)
 
-    // @todo: submit campground
-    // const handleInput = () => {
+    const toBase64 = (file: Blob) => {
+        if(file === null)
+            return
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => dispatch({type: 'file', field: reader.result})
+        reader.onerror = error => console.log(error)
+    }
 
-    // }
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault()
+        let { name, file, description, price } = state
+        if(!name.length || !file || !description.length || !price.length) {
+            setError('Please fill all the fields!')
+            return
+        }
+        fetch(`http://localhost:8080/campgrounds/`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name, file, description, price})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data && data.success) {
+                history.push('/')
+            }
+        })
+    }
 
     if(loading && !data) 
         return <div>loading...</div>
@@ -39,7 +72,7 @@ const AddCampground = ({}: RouteComponentProps) => {
 
     return (
         <div className="campground-form">
-            <form>
+            <form encType="multipart/form-data" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="name">Name of the campground</label>
                     <input 
@@ -63,10 +96,10 @@ const AddCampground = ({}: RouteComponentProps) => {
                     <label htmlFor="image">Campground image</label>
                     <input 
                      className="form-control campground-input" 
-                     type="text" 
-                     name="image" 
-                     onChange={(e) => dispatch({type: 'input', field: e.target})}
-                     placeholder="https://domain.com/image.jpg"
+                     type="file" 
+                     name="file" 
+                     onChange={(e) => e.target.files !== null && toBase64(e.target.files[0])}
+                    //  placeholder="https://domain.com/image.jpg"
                     />
                 </div>
                 <div className="form-group">
