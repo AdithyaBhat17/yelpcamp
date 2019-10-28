@@ -12,9 +12,9 @@ export default () => {
         <Router>
             <Switch>
                 <Route exact path="/" component={App}/>
-                <Route exact path="/login" render={(props) => <Auth purpose='login' {...props}/>}/>
-                <Route exact path="/signup" render={(props) => <Auth purpose='signup' {...props}/>}/>
-                <Route exact path="/add" render={(props) => <AddCampground {...props}/>}/>
+                <Route exact path="/login" component={(props: any) => <Auth purpose='login' {...props}/>}/>
+                <Route exact path="/signup" component={(props: any) => <Auth purpose='signup' {...props}/>}/>
+                <Route exact path="/add" component={(props: any) => <AddCampground {...props}/>}/>
                 <Route exact path="/:id" component={Campground}/>
             </Switch>
         </Router>
