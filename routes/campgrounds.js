@@ -1,6 +1,14 @@
+require('dotenv').config()
 var express = require("express");
 var router  = express.Router();
 var Campground = require("../models/campground");
+var cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret
+})
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
@@ -16,12 +24,23 @@ router.get("/", function(req, res){
 
 //CREATE - add new campground to DB
 // @todo send response instead of redirecting to a view
-router.post("/",isLoggedIn, function(req, res){
+router.post("/",isLoggedIn, async function(req, res) {
     // get data from form and add to campgrounds array
     var name = req.body.name;
-    var image = req.body.image;
+    var file = req.body.file;
     var price = req.body.price;
     var description = req.body.description;
+    let image
+
+    await cloudinary.uploader.upload(file, {folder: 'campgrounds'}, (error, result) => {
+        if(error) {
+            res.send({success: false, error})
+        } else if(result && result.secure_url) {
+            image = result.secure_url
+        } else {
+            res.send({success: false, message: 'Something went wrong while uploading files.. Try again!'})
+        }
+    })
     var newCampground = {name, image, price, description};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, campground){
