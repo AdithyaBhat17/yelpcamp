@@ -22,7 +22,7 @@ mongoose.connect("mongodb://AdithyaBhat:Rusty@ds111476.mlab.com:11476/yelpcamp_a
   useNewUrlParser: true
 });
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
 // seedDB(); // use this to fill your db with default data.
 
