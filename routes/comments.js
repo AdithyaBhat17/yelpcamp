@@ -12,34 +12,52 @@ router.post("/",isLoggedIn,function(req, res){
            console.log(err);
            res.send({success: false, err});
        } else {
-        Comment.create(req.body.comment, function(err, comment){
-           if(err){
-               console.log(err);
-               res.send({success: false, err});
-           } else {
-               campground.comments.push(comment);
-               campground.save();
-               res.send({success: true, comment});
-           }
+            let comment = {text: req.body.comment, author: req.user.username}
+            Comment.create(comment, function(err, comment){
+            if(err){
+                console.log(err);
+                res.send({success: false, err});
+            } else {
+                campground.comments.push(comment);
+                campground.save();
+                res.send({success: true, comment});
+            }
         });
        }
    });
 });
 
 router.delete("/:commentId",isLoggedIn,function(req, res){
-    Comment.findByIdAndRemove(req.params.commentId, function(err){
+    Comment.findById(req.params.commentId, function(err, comment){
         if(err){
             res.send({success: false, err});
         }else{
-            Campground.find({}, function(err, campgrounds) {
-              campgrounds.forEach(campground => {
-                let index = campground.comments.indexOf(req.params.commentId);
-                if(index !== -1)
-                  campground.comments.splice(index, 1)
-                  campground.save()
-              })
-            })
-            res.send({success: true, message: 'Successfully deleted campground!'});
+            if(comment.author === req.user.username) {
+                Comment.deleteOne({_id: req.params.commentId}, function(err) {
+                    if(err) {
+                        console.log('here')
+                        res.status(400).send({
+                            success: false,
+                            err
+                        })
+                    } else {
+                        Campground.find({}, function(_err, campgrounds) {
+                          campgrounds.forEach(campground => {
+                            let index = campground.comments.indexOf(req.params.commentId);
+                            if(index !== -1)
+                              campground.comments.splice(index, 1)
+                              campground.save()
+                          })
+                        })
+                        res.status(200).send({success: true, message: 'Successfully deleted campground!'});
+                    }
+                })
+            } else {                
+                res.status(401).send({
+                    success: false,
+                    message: 'You can only delete your own comments :/'
+                })
+            }
         }
     });
 });
@@ -49,7 +67,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    res.send({success: false, message: 'Please log in to enjoy our services!'});
+    res.send({success: false, isLoggedIn: false, message: 'Please log in to enjoy our services!'});
 }
 
 
