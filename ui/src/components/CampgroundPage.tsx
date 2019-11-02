@@ -3,11 +3,11 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { useFetch } from "../hooks/useFetch";
 import Comments from "./Comments";
 
-interface TParams {
+export interface TParams {
     id: string
 }
 
-const Campground = ({match}: RouteComponentProps<TParams>) => {
+const Campground = ({match, history, location}: RouteComponentProps<TParams>) => {
     
     const [campground, loading] = useFetch('http://localhost:8080/campgrounds/' + match.params.id)
 
@@ -22,7 +22,14 @@ const Campground = ({match}: RouteComponentProps<TParams>) => {
                 <p>
                     {campground.description}
                 </p>
-                {campground.comments && <Comments comments={campground.comments} campgroundName={campground.name}/>}
+                {campground.comments && 
+                <Comments
+                 comments={campground.comments} 
+                 campgroundName={campground.name}
+                 match={match}
+                 location={location}
+                 history={history}
+                />}
             </div>
         </div>
     )
