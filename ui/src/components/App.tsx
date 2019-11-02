@@ -1,5 +1,6 @@
 import React from 'react';
 import Campgrounds from './Campgrounds'
+import { Link } from 'react-router-dom';
 
 interface State {
   search: string
@@ -12,7 +13,7 @@ const App: React.FC<State> = () => {
   const handleInputChange = (search: string) => {
     setSearch(search.toLowerCase())
   }
-  
+
   return (
     <div className="App">
       <div className="unsplash_background">
@@ -27,6 +28,9 @@ const App: React.FC<State> = () => {
         />
       </div>
       <Campgrounds search={search}/>
+      <button className="add-btn-widget">
+        <Link to="/add"><i className="fas fa-plus"></i></Link>
+      </button>
     </div>
   );
 }
