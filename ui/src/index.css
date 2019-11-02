@@ -53,6 +53,12 @@ img {
   margin-bottom: 0;
 }
 
+.add-btn-widget {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+}
+
 .campground {
   margin: 10px auto;
   width: 80%;
