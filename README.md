@@ -1,18 +1,13 @@
 # YelpCamp
 YelpCamp is a dynamic website which provides information about campgrounds
 
-## Snapshots
+**Checkout the master branch for node, express and ejs codebase**
 
-![homepage](https://raw.github.com/AdithyaBhat17/yelpcamp/master/yelpcamp.PNG)
+## TODO
 
-![campgrounds](https://raw.github.com/AdithyaBhat17/yelpcamp/master/campgroundspc.PNG)
+* [ ] - style the application (micro-interactions included)
+* [ ] - handle auth errors in the UI
+* [ ] - add unit tests with react-testing-library and jest
+* [ ] - refactor backend code
 
-### Responsive
 
-![homepage](https://raw.github.com/AdithyaBhat17/yelpcamp/master/home.png)
-
-![campgrounds](https://raw.github.com/AdithyaBhat17/yelpcamp/master/campgrounds.png)
-
-![register](https://raw.github.com/AdithyaBhat17/yelpcamp/master/signin.png)
-
-![login](https://raw.github.com/AdithyaBhat17/yelpcamp/master/login.png)
