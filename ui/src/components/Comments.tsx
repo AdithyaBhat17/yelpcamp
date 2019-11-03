@@ -1,5 +1,6 @@
-import React, { useState, FormEvent, useEffect } from 'react'
-import { RouteComponentProps, Redirect } from 'react-router'
+import React, { useState, FormEvent } from 'react'
+import { RouteComponentProps } from 'react-router'
+
 import { TParams } from './CampgroundPage'
 
 interface Comments extends RouteComponentProps<TParams>{
@@ -17,21 +18,17 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
 
     const [comment, setComment] = useState<string>('')
     const [error, setError] = useState<string>('')
-
-    const doesCommentLengthExceed = (): boolean => {
-        return comment.length > 150
-    }
+    const [loading, setLoading] = useState<{comment: boolean, button: boolean}>({comment: false, button: false})
+    let [_comments, setComments] = useState<Array<Comment>>(comments)
 
     const handleComment = (event: FormEvent) => {
         event.preventDefault()
-        let author: string | null = sessionStorage.getItem('hello')
 
         if(comment.trim().length === 0) {
             setError('Comment cannot be empty :/')
             return
-        } else if (!author) {
-            history.push({pathname: '/login', state: {from: `/${match.params.id}`}})
         } else {
+            setLoading({comment: true,...loading})
             fetch(`http://localhost:8080/campgrounds/${match.params.id}/comments`, {
                 method: 'POST',
                 credentials: 'include',
@@ -45,14 +42,43 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
             .then(res => res.json())
             .then(data => {
                 if(data && data.comment) {
-                    comments.unshift(data.comment)
+                    setLoading({...loading, comment: false})
+                    setComment('')
+                    _comments.unshift(data.comment)
+                    setComments([..._comments])
                 } else if(data && data.isLoggedIn === false) {
                     history.push({pathname: '/login', state: {from: `/${match.params.id}`}})
                 } else if(data && !data.success) {
+                    setLoading({...loading, comment: false})
                     setError(data.message)
                 }
             })
         }
+    }
+
+    const deleteComment = (id: string) => {
+        setLoading({...loading, button: true})
+        fetch(`http://localhost:8080/campgrounds/${match.params.id}/comments/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data && data.success) {
+                setLoading({...loading, button: false})
+                _comments = _comments.filter(comment => comment._id !== id && comment)
+                setComments([..._comments])
+            } else if (data && data.isLoggedIn === false) {
+                alert(data.message)
+                history.push({pathname: '/login', state: {from: `/${match.params.id}`}})
+            } else {
+                setLoading({...loading, button: false})
+                alert('Something went wrong :/')
+            }
+        })
     }
 
     return (
@@ -63,25 +89,29 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
                     <textarea
                      name="comment" 
                      id="comment" 
-                     onChange={(event) => setComment(event.target.value)}
+                     value={comment}
+                     onFocus={() => setError('')}
+                     onChange={(event) => comment.length <=150 ? setComment(event.target.value) : setError('Comment length exceeded :/')}
                      className={`form-control comment-box ${comment.length > 150 ? 'error-input' : ''}`} 
                      placeholder={`What do you think about ${campgroundName}?`}
                     />
-                    {doesCommentLengthExceed() ? 
-                    <small className="error-text">Comment length exceeded :/</small> : 
+                    {error ? 
+                    <small className="error-text">{error}</small> : 
                     null}
-                    <input type="submit" value='Comment' className="comment-btn"/>
+                    <input type="submit" value={loading.comment ? '...' : 'Comment'} className="comment-btn"/>
                 </div>
             </form>
             <div className="comments">
-                {comments.map((comment: Comment) => (
+                {_comments.map((comment: Comment) => (
                     <div key={comment._id} className="comment">
                         <div className="comment-text">
                             <span>{comment.text}</span> <br/>
                             <small>{comment.author}</small>
                         </div>
                         {comment.author === sessionStorage.getItem('hello') && <div className="delete-button">
-                            <button>
+                            <button
+                             disabled={loading.button} 
+                             onClick={() => deleteComment(comment._id)}>
                                 <i className="fa fa-trash"></i>
                             </button>
                         </div>}
