@@ -1,6 +1,7 @@
 import React from 'react'
 import { useFetch } from '../hooks/useFetch'
 import { Link } from 'react-router-dom'
+import { IntersectingCirclesSpinner } from 'react-epic-spinners'
 
 interface Campground {
     _id: string;
@@ -17,7 +18,7 @@ const Campgrounds: React.FC<Props> = ({search}) => {
     const [data, loading] = useFetch('http://localhost:8080/campgrounds')
     
     if(loading)
-        return <div>loading...</div>
+        return <IntersectingCirclesSpinner color="#feca76" className="loading"/>
     
     return (
         <div className="container">

@@ -31,6 +31,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
     let [data, loading] = useFetch('http://localhost:8080/authorized/')
     const [error, setError] = useState<string>('')
     const [state, dispatch] = useReducer(inputReducer, initialState)
+    const [submit, setSubmit] = useState<boolean>(false)
 
     const toBase64 = (file: Blob) => {
         if(file === null)
@@ -48,6 +49,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
             setError('Please fill all the fields!')
             return
         }
+        setSubmit(true)
         fetch(`http://localhost:8080/campgrounds/`, {
             method: 'POST',
             credentials: 'include',
@@ -60,7 +62,14 @@ const AddCampground = ({history}: RouteComponentProps) => {
         .then(data => {
             if(data && data.success) {
                 history.push('/')
+            } else {
+                setSubmit(false)
+                setError(data.message)
             }
+        })
+        .catch(() => {
+            setSubmit(false)
+            setError('Something went wrong :( Try again!')
         })
     }
 
@@ -79,6 +88,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
                      className="form-control campground-input" 
                      type="text" 
                      name="name" 
+                     onFocus={() => error.length && setError('')}
                      onChange={(e) => dispatch({type: 'input', field: e.target})}
                      placeholder="Yosemite"
                     />
@@ -88,6 +98,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
                     <textarea 
                      className="form-control campground-input" 
                      name="description" 
+                     onFocus={() => error.length && setError('')}
                      onChange={(e) => dispatch({type: 'input', field: e.target})}
                      placeholder="Yosemite"
                     />
@@ -98,6 +109,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
                      className="form-control campground-input" 
                      type="file" 
                      name="file" 
+                     onFocus={() => error.length && setError('')}
                      onChange={(e) => e.target.files !== null && toBase64(e.target.files[0])}
                     //  placeholder="https://domain.com/image.jpg"
                     />
@@ -107,12 +119,14 @@ const AddCampground = ({history}: RouteComponentProps) => {
                     <input 
                      type="number" className="form-control campground-input"
                      name="price" 
+                     onFocus={() => error.length && setError('')}
                      onChange={(e) => dispatch({type: 'input', field: e.target})}
                      min="1"
                      max="10000"
                     />
                 </div>
-                <input className="auth-btn" type="submit" value="Add Campground"/>
+                {error ? <small className="error-text">{error}</small> : null}
+                <input className="auth-btn" type="submit" value={`${submit ? 'Adding' : 'Add'} Campground`}/>
             </form>
         </div>
     )

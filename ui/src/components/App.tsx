@@ -27,10 +27,12 @@ const App: React.FC<State> = () => {
          onChange={(event) => handleInputChange(event.target.value)}
         />
       </div>
-      <Campgrounds search={search}/>
-      <button className="add-btn-widget">
-        <Link to="/add"><i className="fas fa-plus"></i></Link>
-      </button>
+      <Campgrounds search={search}/>      
+      <Link to="/add">
+        <button className="add-btn-widget">
+          <i className="fas fa-plus"></i>
+        </button>
+      </Link>
     </div>
   );
 }

@@ -43,7 +43,7 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
                 <div className="form-group">
                     <label htmlFor="username">Username</label>                        
                     <input
-                     type="text" 
+                     type="text"
                      name="username" 
                      className="form-control" 
                      placeholder="John Doe" 
@@ -54,7 +54,7 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
                 <div className="form-group">
                     <label htmlFor="password">Password</label>                        
                     <input
-                     type="password" 
+                     type="password"
                      name="password" 
                      className="form-control" 
                      onChange={(event) => setPassword(event.target.value)}

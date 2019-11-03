@@ -1,10 +1,12 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, 'Nunito', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #1F1F25;
+  color: #fff;
 }
 
 code {
@@ -17,15 +19,25 @@ img {
 }
 
 .unsplash_background {
-  margin: 0 auto 25px;
   padding: 50px 0;
   text-align: center;
-  background-image: url('https://images.unsplash.com/photo-1520824071669-892f70d8a23d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1897&q=80');
   color: #fff;
+}
+
+.loading {
+  display: block;
+  margin: 5vh auto;
+}
+
+.loading-2 {
+  margin: 45vh auto;
 }
 
 .welcome-h1 {
   font-size: 4em;
+  font-weight: bold;
+  font-family: 'DM Serif Text';
+  color: #FECA76;
 }
 
 .search {
@@ -35,28 +47,48 @@ img {
 }
 
 .campground-cards {
-  margin-top: 15px;
-  box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+  margin: 0 auto 25px;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
   border-radius: 5px;
   padding-bottom: 2px;
+  background-color: #f3f3f3 !important;
   text-align: center;
+  color: #1f1f25;
 }
 
 .thumbnail-img {
   width: 100%;
   height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .card-p:first-of-type {
-  font-weight: 500;
-  margin-top: 5px;
+  font-weight: 700;
+  font-size: 1.1em;
+  margin-top: 10px;
   margin-bottom: 0;
+}
+
+.card-p > a {
+  color: #92703a;
+  font-weight: lighter;
 }
 
 .add-btn-widget {
   position: fixed;
   bottom: 5%;
   right: 5%;
+  border-radius: 10%;
+  border: none;
+  font-size: 1.25em;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  padding: 8px 15px;
+  background-color: #feca76;
+}
+
+.add-btn-widget > a {  
+  color: #1f1f25;
 }
 
 .campground {
@@ -70,27 +102,73 @@ img {
   width: 100%;
 }
 
+.form-control, .form-control:focus {
+  border: none;
+  border-radius: 0;
+  color: #f3f3f3;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  border-bottom: 2px solid #FECA76ff;
+  background-color: #1f1f25;
+}
+
+.campground-image {
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+}
+
+.campground-name, h4 {
+  font-family: 'DM Serif Text';
+  letter-spacing: 1px;
+}
+
 .comment {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border-radius: 10px;
+  border: 0.5px solid #feca76;
+  margin-bottom: 15px;
+  border-radius: 5px;
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
 }
 
+.comment-text > p {
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.comment-btn {
+  color: #1F1F25;
+  background-color: #feca76;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 8px 18px;
+  border: none;
+}
+
 .comment-box {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .error-input {
-  border: 1px solid #ff0000;
+  border: 2px solid #feca76;
 }
 
 .error-text {
-  color: #ff0000;
+  color: #feca76;
   display: block;
   margin-bottom: 5px;
+}
+
+.delete-btn, .delete-btn:disabled {
+  background-color: #feca76;
+  border-radius: 5px;
+  border: none;
+  color: #1f1f25;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  padding: 5px 10px;
+}.delete-btn:disabled {
+  opacity: 0.3;
 }
 
 .auth-form, .campground-form > form {
@@ -101,4 +179,13 @@ img {
 .auth-btn {
   display: block;
   width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+  .comment-text > p {
+    width: 95%;
+  }
 }

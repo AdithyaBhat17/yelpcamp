@@ -28,7 +28,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
             setError('Comment cannot be empty :/')
             return
         } else {
-            setLoading({comment: true,...loading})
+            setLoading({...loading, comment: true})
             fetch(`http://localhost:8080/campgrounds/${match.params.id}/comments`, {
                 method: 'POST',
                 credentials: 'include',
@@ -105,11 +105,12 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
                 {_comments.map((comment: Comment) => (
                     <div key={comment._id} className="comment">
                         <div className="comment-text">
-                            <span>{comment.text}</span> <br/>
+                            <p>{comment.text}</p>
                             <small>{comment.author}</small>
                         </div>
                         {comment.author === sessionStorage.getItem('hello') && <div className="delete-button">
                             <button
+                             className="delete-btn"
                              disabled={loading.button} 
                              onClick={() => deleteComment(comment._id)}>
                                 <i className="fa fa-trash"></i>
