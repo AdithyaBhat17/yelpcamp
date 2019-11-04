@@ -1,6 +1,8 @@
 import React, { useState, useReducer, FormEvent } from 'react'
 import { RouteComponentProps, Redirect } from 'react-router'
 import { useFetch } from '../hooks/useFetch'
+import tourist from '../assets/tourist.png'
+import { IntersectingCirclesSpinner } from 'react-epic-spinners'
 
 const initialState = {
     name: '',
@@ -74,60 +76,68 @@ const AddCampground = ({history}: RouteComponentProps) => {
     }
 
     if(loading && !data) 
-        return <div>loading...</div>
+        return <IntersectingCirclesSpinner className="loading loading-2" color="#feca74" />
 
     if(data && data.isLoggedIn === false)
         return <Redirect to={{pathname: '/login', state: {from: '/add'}}} />
 
     return (
-        <div className="campground-form">
-            <form encType="multipart/form-data" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Name of the campground</label>
-                    <input 
-                     className="form-control campground-input" 
-                     type="text" 
-                     name="name" 
-                     onFocus={() => error.length && setError('')}
-                     onChange={(e) => dispatch({type: 'input', field: e.target})}
-                     placeholder="Yosemite"
-                    />
+        <div className="container">
+            <div className="row camp">
+                <div className="col-lg-6 col-sm-12">
+                    <h1 className="auth-h1 camp-h1">Add new campground</h1>
+                    <form encType="multipart/form-data" onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label className="campground-label" htmlFor="name">Name of the campground</label>
+                            <input 
+                            className="form-control campground-input" 
+                            type="text" 
+                            name="name" 
+                            onFocus={() => error.length && setError('')}
+                            onChange={(e) => dispatch({type: 'input', field: e.target})}
+                            placeholder="Yosemite"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="campground-label" htmlFor="description">Describe {state.name || 'Campground'}</label>
+                            <textarea 
+                            className="form-control campground-input" 
+                            name="description" 
+                            onFocus={() => error.length && setError('')}
+                            onChange={(e) => dispatch({type: 'input', field: e.target})}
+                            placeholder="Yosemite"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="campground-label" htmlFor="image">Campground image</label>
+                            <input 
+                            className="form-control campground-input" 
+                            type="file" 
+                            name="file" 
+                            onFocus={() => error.length && setError('')}
+                            onChange={(e) => e.target.files !== null && toBase64(e.target.files[0])}
+                            //  placeholder="https://domain.com/image.jpg"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="campground-label" htmlFor="price">Price</label>
+                            <input 
+                            type="number" className="form-control campground-input"
+                            name="price" 
+                            onFocus={() => error.length && setError('')}
+                            onChange={(e) => dispatch({type: 'input', field: e.target})}
+                            min="1"
+                            max="10000"
+                            />
+                        </div>
+                        {error ? <small className="error-text">{error}</small> : <br />}
+                        <input className="auth-btn camp-btn" type="submit" value={`${submit ? 'Adding' : 'Add'} Campground`}/>
+                    </form>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="description">Describe {state.name || 'Campground'}</label>
-                    <textarea 
-                     className="form-control campground-input" 
-                     name="description" 
-                     onFocus={() => error.length && setError('')}
-                     onChange={(e) => dispatch({type: 'input', field: e.target})}
-                     placeholder="Yosemite"
-                    />
+                <div className="col-lg-6 col-sm-12">
+                    <img src={tourist} alt="tourist" className="tourist-img"/>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="image">Campground image</label>
-                    <input 
-                     className="form-control campground-input" 
-                     type="file" 
-                     name="file" 
-                     onFocus={() => error.length && setError('')}
-                     onChange={(e) => e.target.files !== null && toBase64(e.target.files[0])}
-                    //  placeholder="https://domain.com/image.jpg"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="price">Price</label>
-                    <input 
-                     type="number" className="form-control campground-input"
-                     name="price" 
-                     onFocus={() => error.length && setError('')}
-                     onChange={(e) => dispatch({type: 'input', field: e.target})}
-                     min="1"
-                     max="10000"
-                    />
-                </div>
-                {error ? <small className="error-text">{error}</small> : null}
-                <input className="auth-btn" type="submit" value={`${submit ? 'Adding' : 'Add'} Campground`}/>
-            </form>
+            </div>
         </div>
     )
 }

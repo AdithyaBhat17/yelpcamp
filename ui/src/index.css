@@ -36,7 +36,7 @@ img {
 .welcome-h1 {
   font-size: 4em;
   font-weight: bold;
-  font-family: 'DM Serif Text';
+  font-family: 'Montserrat';
   color: #FECA76;
 }
 
@@ -51,9 +51,10 @@ img {
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
   border-radius: 5px;
   padding-bottom: 2px;
-  background-color: #f3f3f3 !important;
+  background-color: #1f1f25 !important;
+  color: #fff;
+  border: 2px solid #feca76;
   text-align: center;
-  color: #1f1f25;
 }
 
 .thumbnail-img {
@@ -117,7 +118,7 @@ img {
 }
 
 .campground-name, h4 {
-  font-family: 'DM Serif Text';
+  font-family: 'Montserrat';
   letter-spacing: 1px;
 }
 
@@ -126,7 +127,7 @@ img {
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border: 0.5px solid #feca76;
+  border: 2px solid #feca76;
   margin-bottom: 15px;
   border-radius: 5px;
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
@@ -171,21 +172,125 @@ img {
   opacity: 0.3;
 }
 
+.auth-h1 {
+  color: #feca76;
+  font-family: 'Montserrat';
+  font-weight: bolder;
+  font-size: 3em;
+  margin: 10vh auto 20px;
+}
+
+.login {
+  margin: 15vh auto;
+}
+
 .auth-form, .campground-form > form {
   margin: 0 auto;
-  width: 30%;
+  /* width: 30%; */
 }
 
 .auth-btn {
   display: block;
   width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #feca76;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+}
+
+small {
+  display: block;
+  margin-top: 5px !important;
+  color: #feca76;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #1f1f25;
+  color: #feca76;
+  border: 2px solid #feca76;
+  padding: 5px 10px;
+  border-radius: 5px;
+}input[type="file"] {
+  border: none;
+  padding: 0;
+}
+
+.camp-h1 {
+  margin-top: 15vh;
+}
+
+.campground-input, .camp-btn {
+  width: 90%;
+}
+
+.tourist-img {
+  margin: 15vh auto;
+  display: block;
 }
 
 @media only screen and (max-width: 768px) {
-  .container {
-    padding: 0;
+  .search {
+    width: 70%;
+  }
+  .welcome-h1 {
+    font-size: 3em;
+  }
+  .campground-cards {
+    background-color: #1f1f25 !important;
+    color: #fff;
+    border: 2px solid #feca76
+  }
+  .unsplash_background {
+    padding-bottom: 10px 
+  }
+  .add-btn-widget {
+    bottom: 2%;
+  }
+  .campground {
+    padding-top: 10px;
+    width: 100%;
   }
   .comment-text > p {
     width: 95%;
+  }
+  .login {
+    margin: 40px auto;
+  }.auth-h1 {
+    margin: 15px auto;
+    font-size: 2.25em;
+  }
+  .tourist-img {
+    margin: 0 auto;
+  }
+  .campground-input, .camp-btn {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 767px) {
+  .campground-cards {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .login {
+    margin: 10vh auto;
+  }.auth-h1 {
+    margin: 15px auto;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .auth-h1 {
+    margin: 35px auto;
+  }
+  .camp-h1 {
+    margin: 15vh auto 20px;
+  }.tourist-img {
+    margin: 20vh auto 0;
   }
 }

@@ -17,7 +17,7 @@ interface Props {
 const Campgrounds: React.FC<Props> = ({search}) => {
     const [data, loading] = useFetch('http://localhost:8080/campgrounds')
     
-    if(loading)
+    if(loading || (data && !data.campgrounds))
         return <IntersectingCirclesSpinner color="#feca76" className="loading"/>
     
     return (
@@ -25,7 +25,7 @@ const Campgrounds: React.FC<Props> = ({search}) => {
             <div className="row">
                 {data && data.campgrounds.map((campground: Campground) => 
                 campground.name.toLowerCase().includes(search) && (
-                    <div key={campground._id} className="col-md-3 col-sm-12">
+                    <div key={campground._id} className="col-lg-3 col-md-6 col-sm-12">
                         <div className="thumbnail campground-cards">
                             <img className="thumbnail-img" src={campground.image} alt={campground.name}/>
                             <p className="card-p">{campground.name}</p>

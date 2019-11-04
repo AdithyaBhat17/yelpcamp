@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import { RouteComponentProps } from 'react-router'
+import login from '../../assets/login.png';
+import { Link } from 'react-router-dom';
 
 interface Props extends RouteComponentProps {
     purpose: string;
@@ -32,37 +34,58 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
                 history.push(`${location.state ? location.state.from : '/'}`)
                 setError('')
             } else
-                setError('Something went wrong :(')
+                setError(data.err.message)
         })
         .catch(_error => setError("User doesn't exist"))
     }
 
     return (
-        <div className="login">
-            <form className="auth-form" onSubmit={handleAuth}>
-                <div className="form-group">
-                    <label htmlFor="username">Username</label>                        
-                    <input
-                     type="text"
-                     name="username" 
-                     className="form-control" 
-                     placeholder="John Doe" 
-                     onChange={(event) => setUsername(event.target.value)}
-                     required
-                    />
+        <div className="container login">
+            <div className="row">
+                <div className="col-lg-6 col-sm-12">
+                    <div>
+                        <h1 className="auth-h1">Identify yourself <br/> Human!</h1>
+                        <form className="auth-form" onSubmit={handleAuth}>
+                            <input type="hidden" value="something" />
+                            <div className="form-group">
+                                <label htmlFor="username">Username</label>                        
+                                <input
+                                    type="text"
+                                    name="username" 
+                                    autoComplete="new-password"
+                                    className="form-control" 
+                                    placeholder="John Doe" 
+                                    onChange={(event) => setUsername(event.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">Password</label>                        
+                                <input
+                                    type="password"
+                                    name="password" 
+                                    autoComplete="new-password"
+                                    className="form-control" 
+                                    onChange={(event) => setPassword(event.target.value)}
+                                    required
+                                />
+                            </div>
+                            {error ? <small>{error}</small> : <br/>}
+                            <input type="submit" value={purpose === 'login' ? 'Login' : 'Sign Up'} className="auth-btn"/>
+                            <Link to={{
+                                pathname: purpose === 'login' ? '/signup' : '/login', 
+                                state: {from: location.state ? location.state.from : '/'}}}
+                            >
+                                {purpose === 'login' ? <small>New here? sign up</small> :
+                                <small>Been here before? Login</small>}
+                            </Link>
+                        </form>
+                    </div>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>                        
-                    <input
-                     type="password"
-                     name="password" 
-                     className="form-control" 
-                     onChange={(event) => setPassword(event.target.value)}
-                     required
-                    />
+                <div className="col-lg-6 col-sm-12">
+                    <img src={login} className="login-image" alt="login illustration"/>
                 </div>
-                <input type="submit" value={purpose === 'login' ? 'Login' : 'Sign Up'} className="auth-btn"/>
-            </form>
+            </div>
         </div>
     )
 }
