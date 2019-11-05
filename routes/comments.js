@@ -35,7 +35,6 @@ router.delete("/:commentId",isLoggedIn,function(req, res){
             if(comment.author === req.user.username) {
                 Comment.deleteOne({_id: req.params.commentId}, function(err) {
                     if(err) {
-                        console.log('here')
                         res.status(400).send({
                             success: false,
                             err

@@ -231,8 +231,26 @@ input[type="file"]::-webkit-file-upload-button {
   display: block;
 }
 
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions > button:not(:first-of-type) {
+  border: 2px solid #feca76;
+  color: #feca76;
+  background-color: #1f1f25;
+}
+
+.empty {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+}
+
 @media only screen and (max-width: 768px) {
-  .search {
+  .search, .empty {
     width: 70%;
   }
   .welcome-h1 {

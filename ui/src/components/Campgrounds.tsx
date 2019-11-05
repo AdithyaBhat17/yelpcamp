@@ -2,6 +2,7 @@ import React from 'react'
 import { useFetch } from '../hooks/useFetch'
 import { Link } from 'react-router-dom'
 import { IntersectingCirclesSpinner } from 'react-epic-spinners'
+import empty from '../assets/empty.png'
 
 interface Campground {
     _id: string;
@@ -23,8 +24,8 @@ const Campgrounds: React.FC<Props> = ({search}) => {
     return (
         <div className="container">
             <div className="row">
-                {data && data.campgrounds.map((campground: Campground) => 
-                campground.name.toLowerCase().includes(search) && (
+                {data && data.campgrounds.map((campground: Campground, index: Number) => 
+                campground.name.toLowerCase().includes(search) ? (
                     <div key={campground._id} className="col-lg-3 col-md-6 col-sm-12">
                         <div className="thumbnail campground-cards">
                             <img className="thumbnail-img" src={campground.image} alt={campground.name}/>
@@ -34,7 +35,10 @@ const Campgrounds: React.FC<Props> = ({search}) => {
                             </p>
                         </div>
                     </div>
-                ))}
+                ) : index === 0 &&
+                <div key={campground._id} className="empty">
+                    <img src={empty} alt="no campgrounds available"/>
+                </div>)}
             </div>
         </div>
     )

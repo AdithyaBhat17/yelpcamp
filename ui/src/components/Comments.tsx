@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react'
 import { RouteComponentProps } from 'react-router'
+import { useToasts } from 'react-toast-notifications'
 
 import { TParams } from './CampgroundPage'
 
@@ -20,6 +21,8 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
     const [error, setError] = useState<string>('')
     const [loading, setLoading] = useState<{comment: boolean, button: boolean}>({comment: false, button: false})
     let [_comments, setComments] = useState<Array<Comment>>(comments)
+
+    const { addToast } = useToasts()
 
     const handleComment = (event: FormEvent) => {
         event.preventDefault()
@@ -69,14 +72,15 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
         .then(data => {
             if(data && data.success) {
                 setLoading({...loading, button: false})
+                addToast(data.message, {appearance: 'success', autoDismiss: true})
                 _comments = _comments.filter(comment => comment._id !== id && comment)
                 setComments([..._comments])
             } else if (data && data.isLoggedIn === false) {
-                alert(data.message)
+                addToast(data.message, {appearance: 'error', autoDismiss: true})
                 history.push({pathname: '/login', state: {from: `/${match.params.id}`}})
             } else {
                 setLoading({...loading, button: false})
-                alert('Something went wrong :/')
+                addToast('Something went wrong :/', {appearance: 'error', autoDismiss: true})
             }
         })
     }

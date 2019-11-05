@@ -41,7 +41,7 @@ router.post("/",isLoggedIn, async function(req, res) {
             res.send({success: false, message: 'Something went wrong while uploading files.. Try again!'})
         }
     })
-    var newCampground = {name, image, price, description};
+    var newCampground = {name, image, price, description, author: req.user.username};
     // Create a new campground and save to DB
     Campground.create(newCampground, function(err, campground){
         if(err){
@@ -85,13 +85,32 @@ router.put("/:id",function(req, res){
 
 //DESTROY
 router.delete("/:id/delete",isLoggedIn,function(req, res){
-    Campground.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            res.send({success: false, err});
-        }else{
-            res.send({success: true, message: 'Successfully deleted campground!'});
+    Campground.findById(req.params.id, function(error, campground) {
+        if(error)
+            res.status(400).send({success: false, message: error.message})
+        else {
+            if(campground.author === req.user.username) {
+                Campground.deleteOne({_id: req.params.id}, function(error) {
+                    if(error) {
+                        res.status(400).send({
+                            success: false,
+                            message: error.message
+                        })
+                    } else {
+                        res.status(200).send({
+                            success: true,
+                            message: 'Successfully deleted ' + campground.name + '!'
+                        })
+                    }
+                })
+            } else {                
+                res.status(401).send({
+                    success: false,
+                    message: 'You can only delete your own campgrounds :/'
+                })
+            }
         }
-    });
+    })
 });
 
 
@@ -100,7 +119,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    res.send({success: false, message: 'Please log in to enjoy our services!'});
+    res.send({success: false, isLoggedIn: false, message: 'Please log in to enjoy our services!'});
 }
 
 module.exports = router;
