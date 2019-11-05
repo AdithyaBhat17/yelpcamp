@@ -1,39 +1,59 @@
+require('dotenv').config()
 var express = require("express");
 var router  = express.Router();
 var Campground = require("../models/campground");
+var cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret
+})
 
 //INDEX - show all campgrounds
 router.get("/", function(req, res){
     // Get all campgrounds from DB
-    Campground.find({}, function(err, allCampgrounds){
+    Campground.find({}, function(err, campgrounds){
        if(err){
-           console.log(err);
+           res.send({success: false, err});
        } else {
-          res.render("campgrounds/index",{campgrounds:allCampgrounds});
+          res.send({success: true, campgrounds});
        }
     });
 });
 
 //CREATE - add new campground to DB
-router.post("/",isLoggedIn, function(req, res){
+// @todo send response instead of redirecting to a view
+router.post("/",isLoggedIn, async function(req, res) {
     // get data from form and add to campgrounds array
     var name = req.body.name;
-    var image = req.body.image;
+    var file = req.body.file;
     var price = req.body.price;
-    var desc = req.body.description;
-    var newCampground = {name: name, image: image,price: price, description: desc};
-// Create a new campground and save to DB
-    Campground.create(newCampground, function(err, newlyCreated){
-        if(err){
-            console.log(err);
+    var description = req.body.description;
+    let image
+
+    await cloudinary.uploader.upload(file, {folder: 'campgrounds'}, (error, result) => {
+        if(error) {
+            res.send({success: false, error})
+        } else if(result && result.secure_url) {
+            image = result.secure_url
         } else {
-            //redirect back to campgrounds page
-            res.redirect("/campgrounds");
+            res.send({success: false, message: 'Something went wrong while uploading files.. Try again!'})
+        }
+    })
+    var newCampground = {name, image, price, description, author: req.user.username};
+    // Create a new campground and save to DB
+    Campground.create(newCampground, function(err, campground){
+        if(err){
+          res.send({success: false, err});
+        } else {
+            res.send({success: true, campground});
         }
     });
 });
 
 //NEW - show form to create new campground
+// @todo remove this route
 router.get("/new",isLoggedIn, function(req, res){
    res.render("campgrounds/new");
 });
@@ -41,59 +61,56 @@ router.get("/new",isLoggedIn, function(req, res){
 // SHOW - shows more info about one campground
 router.get("/:id", function(req, res){
     //find the campground with provided ID
-    Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, campground){
         if(err){
-            console.log(err);
+            res.send({success: false, err});
         } else {
-          // if campground exits show list of campgrounds on the right side of the page for easier navigation
-          // across campground pages.
-            Campground.find({}, async function (err, allCampgrounds) {
-              if(err)
-                console.log(err)
-              else {
-                //render show template with that campground
-                res.render("campgrounds/show", {campground: foundCampground, allCampgrounds});
-              }
-            })
+            //render show template with that campground
+            res.send(campground);
         }
     });
-});
-
-//EDIT
-router.get("/:id/edit",isLoggedIn, function(req, res){
-    Campground.findById(req.params.id,function(err,foundCampground){
-        if(err){
-            console.log(err);
-        }else{
-            res.render("campgrounds/edit",{campground:foundCampground});
-        }
-    });
-
 });
 
 //UPDATE
 router.put("/:id",function(req, res){
-    var newData = {name: req.body.campground.name, image: req.body.campground.image, description: req.body.campground.description, price: req.body.campground.price, location: location, lat: lat, lng: lng};
-    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err,campground){
+    var newData = {name: req.body.name, image: req.body.image, description: req.body.description, price: req.body.price};
+    Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
         if(err){
-            console.log(err);
+            res.send({success: false, err});
         }else{
-            req.flash("success","Successfully Updated!");
-            res.redirect("/campgrounds/" + campground._id);
+            res.send({success: false, campground});
         }
     });
 });
 
 //DESTROY
 router.delete("/:id/delete",isLoggedIn,function(req, res){
-    Campground.findByIdAndRemove(req.params.id, function(err){
-        if(err){
-            console.log(err);
-            res.redirect("/campgrounds");
-        }else{
-            res.redirect("/campgrounds");
+    Campground.findById(req.params.id, function(error, campground) {
+        if(error)
+            res.status(400).send({success: false, message: error.message})
+        else {
+            if(campground.author === req.user.username) {
+                Campground.deleteOne({_id: req.params.id}, function(error) {
+                    if(error) {
+                        res.status(400).send({
+                            success: false,
+                            message: error.message
+                        })
+                    } else {
+                        res.status(200).send({
+                            success: true,
+                            message: 'Successfully deleted ' + campground.name + '!'
+                        })
+                    }
+                })
+            } else {                
+                res.status(401).send({
+                    success: false,
+                    message: 'You can only delete your own campgrounds :/'
+                })
+            }
         }
-    });
+    })
 });
 
 
@@ -102,8 +119,7 @@ function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return next();
     }
-    req.flash("error","You need to be logged in to that");
-    res.redirect("/login");
+    res.send({success: false, isLoggedIn: false, message: 'Please log in to enjoy our services!'});
 }
 
 module.exports = router;

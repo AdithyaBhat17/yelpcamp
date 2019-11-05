@@ -1,0 +1,314 @@
+body {
+  margin: 0;
+  font-family: -apple-system, 'Nunito', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #1F1F25;
+  color: #fff;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+img {
+  max-width: 100%;
+}
+
+.unsplash_background {
+  padding: 50px 0;
+  text-align: center;
+  color: #fff;
+}
+
+.loading {
+  display: block;
+  margin: 5vh auto;
+}
+
+.loading-2 {
+  margin: 45vh auto;
+}
+
+.welcome-h1 {
+  font-size: 4em;
+  font-weight: bold;
+  font-family: 'Montserrat';
+  color: #FECA76;
+}
+
+.search {
+  display: block;
+  margin: 25px auto;
+  width: 30%;
+}
+
+.campground-cards {
+  margin: 0 auto 25px;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 5px;
+  padding-bottom: 2px;
+  background-color: #1f1f25 !important;
+  color: #fff;
+  border: 2px solid #feca76;
+  text-align: center;
+}
+
+.thumbnail-img {
+  width: 100%;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.card-p:first-of-type {
+  font-weight: 700;
+  font-size: 1.1em;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.card-p > a {
+  color: #92703a;
+  font-weight: lighter;
+}
+
+.add-btn-widget {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  border-radius: 10%;
+  border: none;
+  font-size: 1.25em;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  padding: 8px 15px;
+  background-color: #feca76;
+}
+
+.add-btn-widget > a {  
+  color: #1f1f25;
+}
+
+.campground {
+  margin: 10px auto;
+  width: 80%;
+}
+
+.campground > img {
+  display: block;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.form-control, .form-control:focus {
+  border: none;
+  border-radius: 0;
+  color: #f3f3f3;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  border-bottom: 2px solid #FECA76ff;
+  background-color: #1f1f25;
+}
+
+.campground-image {
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  border-radius: 10px;
+}
+
+.campground-name, h4 {
+  font-family: 'Montserrat';
+  letter-spacing: 1px;
+}
+
+.comment {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 2px solid #feca76;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+}
+
+.comment-text > p {
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.comment-btn {
+  color: #1F1F25;
+  background-color: #feca76;
+  border-radius: 5px;
+  font-weight: bold;
+  padding: 8px 18px;
+  border: none;
+}
+
+.comment-box {
+  margin-bottom: 20px;
+}
+
+.error-input {
+  border: 2px solid #feca76;
+}
+
+.error-text {
+  color: #feca76;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.delete-btn, .delete-btn:disabled {
+  background-color: #feca76;
+  border-radius: 5px;
+  border: none;
+  color: #1f1f25;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+  padding: 5px 10px;
+}.delete-btn:disabled {
+  opacity: 0.3;
+}
+
+.auth-h1 {
+  color: #feca76;
+  font-family: 'Montserrat';
+  font-weight: bolder;
+  font-size: 3em;
+  margin: 10vh auto 20px;
+}
+
+.login {
+  margin: 15vh auto;
+}
+
+.auth-form, .campground-form > form {
+  margin: 0 auto;
+  /* width: 30%; */
+}
+
+.auth-btn {
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #feca76;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
+}
+
+small {
+  display: block;
+  margin-top: 5px !important;
+  color: #feca76;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background-color: #1f1f25;
+  color: #feca76;
+  border: 2px solid #feca76;
+  padding: 5px 10px;
+  border-radius: 5px;
+}input[type="file"] {
+  border: none;
+  padding: 0;
+}
+
+.camp-h1 {
+  margin-top: 15vh;
+}
+
+.campground-input, .camp-btn {
+  width: 90%;
+}
+
+.tourist-img {
+  margin: 15vh auto;
+  display: block;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions > button:not(:first-of-type) {
+  border: 2px solid #feca76;
+  color: #feca76;
+  background-color: #1f1f25;
+}
+
+.empty {
+  display: block;
+  margin: 0 auto;
+  width: 30%;
+}
+
+@media only screen and (max-width: 768px) {
+  .search, .empty {
+    width: 70%;
+  }
+  .welcome-h1 {
+    font-size: 3em;
+  }
+  .campground-cards {
+    background-color: #1f1f25 !important;
+    color: #fff;
+    border: 2px solid #feca76
+  }
+  .unsplash_background {
+    padding-bottom: 10px 
+  }
+  .add-btn-widget {
+    bottom: 2%;
+  }
+  .campground {
+    padding-top: 10px;
+    width: 100%;
+  }
+  .comment-text > p {
+    width: 95%;
+  }
+  .login {
+    margin: 40px auto;
+  }.auth-h1 {
+    margin: 15px auto;
+    font-size: 2.25em;
+  }
+  .tourist-img {
+    margin: 0 auto;
+  }
+  .campground-input, .camp-btn {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 767px) {
+  .campground-cards {
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 991px) {
+  .login {
+    margin: 10vh auto;
+  }.auth-h1 {
+    margin: 15px auto;
+  }
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .auth-h1 {
+    margin: 35px auto;
+  }
+  .camp-h1 {
+    margin: 15vh auto 20px;
+  }.tourist-img {
+    margin: 20vh auto 0;
+  }
+}
