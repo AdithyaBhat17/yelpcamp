@@ -1,3 +1,4 @@
+require('dotenv').config()
 var express     = require("express"),
     app         = express(),
     bodyParser  = require("body-parser"),
@@ -9,21 +10,21 @@ var express     = require("express"),
     // passportLocalMongoose = require("passport-local-mongoose"),
     // Campground  = require("./models/campground"),
     // Comment     = require("./models/comment"),
-    User        = require("./models/user"),
-    seedDB      = require("./seeds");
+    User        = require("./models/user");
+    // seedDB      = require("./seeds");
 
 var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index");
 
 // mongoose.connect("mongodb://localhost/yelp_camp");
-mongoose.connect("mongodb://AdithyaBhat:Rusty@ds111476.mlab.com:11476/yelpcamp_adithya", {
+mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
+app.use(cors({credentials: true, origin: process.env.BASE_URL}))
 // seedDB(); // use this to fill your db with default data.
 
 //passport config
