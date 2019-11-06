@@ -16,7 +16,7 @@ interface Props {
 }
 
 const Campgrounds: React.FC<Props> = ({search}) => {
-    const [data, loading] = useFetch('http://localhost:8080/campgrounds')
+    const [data, loading] = useFetch(`${process.env.REACT_APP_BASE_URL}/campgrounds`)
     
     if(loading || (data && !data.campgrounds))
         return <IntersectingCirclesSpinner color="#feca76" className="loading"/>
