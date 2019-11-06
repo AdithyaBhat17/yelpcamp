@@ -3,7 +3,6 @@ import { useFetch } from '../hooks/useFetch'
 import { Link } from 'react-router-dom'
 import { IntersectingCirclesSpinner } from 'react-epic-spinners'
 import empty from '../assets/empty.png'
-import { JSXElement } from '@babel/types'
 
 interface Campground {
     _id: string;
