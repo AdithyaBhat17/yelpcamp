@@ -30,7 +30,7 @@ const inputReducer = (state = initialState, action: { type: string, field: any }
 
 const AddCampground = ({history}: RouteComponentProps) => {
 
-    let [data, loading] = useFetch('http://localhost:8080/authorized/')
+    let [data, loading] = useFetch(`${process.env.REACT_APP_BASE_URL}/authorized/`)
     const [error, setError] = useState<string>('')
     const [state, dispatch] = useReducer(inputReducer, initialState)
     const [submit, setSubmit] = useState<boolean>(false)
@@ -52,7 +52,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
             return
         }
         setSubmit(true)
-        fetch(`http://localhost:8080/campgrounds/`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/`, {
             method: 'POST',
             credentials: 'include',
             headers: {

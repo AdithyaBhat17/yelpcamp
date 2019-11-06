@@ -11,13 +11,12 @@ export interface TParams {
 
 const Campground = ({match, history, location}: RouteComponentProps<TParams>) => {
     
-    const [campground, loading] = useFetch('http://localhost:8080/campgrounds/' + match.params.id)
-    const [authorized, _loading] = useFetch('http://localhost:8080/authorized/') 
+    const [campground, loading] = useFetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${match.params.id}`)
 
     const { addToast } = useToasts()
 
     const deleteCampground = (id: string) => {
-        fetch(`http://localhost:8080/campgrounds/${id}/delete`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${id}/delete`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {
@@ -43,7 +42,7 @@ const Campground = ({match, history, location}: RouteComponentProps<TParams>) =>
         })
     }
 
-    if(loading || !campground || _loading || !authorized)
+    if(loading || !campground)
         return <IntersectingCirclesSpinner color="#feca76" className="loading loading-2" />
 
     return (

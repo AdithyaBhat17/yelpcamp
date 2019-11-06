@@ -32,7 +32,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
             return
         } else {
             setLoading({...loading, comment: true})
-            fetch(`http://localhost:8080/campgrounds/${match.params.id}/comments`, {
+            fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${match.params.id}/comments`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
@@ -61,7 +61,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
 
     const deleteComment = (id: string) => {
         setLoading({...loading, button: true})
-        fetch(`http://localhost:8080/campgrounds/${match.params.id}/comments/${id}`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${match.params.id}/comments/${id}`, {
             method: 'DELETE',
             credentials: 'include',
             headers: {

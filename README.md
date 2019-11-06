@@ -8,7 +8,6 @@ YelpCamp is a dynamic website which provides information about campgrounds
 * [x] - style the application (micro-interactions included)
 * [x] - handle auth errors in the UI
 * [ ] - add a 404 page
-* [ ] - add unit tests with react-testing-library and jest
 * [ ] - refactor backend code
 
 
