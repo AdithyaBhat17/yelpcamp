@@ -4,7 +4,6 @@ var passport = require("passport");
 var User = require("../models/user");
 
 //handle sign up logic
-// @todo change auth implementation
 router.post("/signup", function(req, res){
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
@@ -17,6 +16,10 @@ router.post("/signup", function(req, res){
         }
     });
 });
+
+router.get('/', function(_req, res) {
+    res.status(200).send('Hello bot!!')
+})
 
 //handling login logic
 router.post("/login", passport.authenticate("local"), function(req, res){
