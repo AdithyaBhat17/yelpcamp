@@ -10,13 +10,13 @@ YelpCamp is a dynamic website which provides information about campgrounds
 Requirements - Node.js, npm, nodemon (`npm i -g nodemon`) 
 
 * install the required dependencies - `npm install`
-* create an account at mlab.com and create a database with aws cloud us-east-1.
+* create an account at [mlab.com](https://mlab.com) and create a database with aws cloud us-east-1.
 * copy and paste the generated database url to a .env file at the root folder of the application  
     ```.env
     DB_URL = mongodb://<dbuser>:<dbpassword>@ds111476.mlab.com:11476/<db_name>
     BASE_URL = http://localhost:3000
     ```
-* create an account at cloudinary.com and create a folder called campgrounds. Copy/paste your cloudinary credentials to the .env file  
+* create an account at [cloudinary.com](https://cloudinary.com) and create a folder called campgrounds. Copy/paste your cloudinary credentials to the .env file  
     ```.env
     DB_URL = mongodb://<dbuser>:<dbpassword>@ds111476.mlab.com:11476/<db_name>
     BASE_URL = http://localhost:3000
@@ -24,7 +24,12 @@ Requirements - Node.js, npm, nodemon (`npm i -g nodemon`)
     api_key = <api_key_here>
     api_secret = <api_secret>
     ```
-* now start the server - `npm start`
+* go to [`app.js`](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js) and uncomment lines [11](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js#L11) and [24](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js#L11) and run `node app.js` to create dummy campgrounds data.
+* comment back the seedDB() code.  
+    `// seedDB()`
+* now start the server - `npm start`  
+
+
 
 **Setup the front-end server**
 
@@ -35,7 +40,8 @@ Requirements - Node.js, npm, nodemon (`npm i -g nodemon`)
     ```
 * start the server - `npm start`
 
-Happy coding!! Feel free to contribute to the repository by sending a Pull Request.
+Happy coding :tada::tada:  
+Feel free to contribute to the repository by sending a Pull Request.
 
 
 ## TODO
