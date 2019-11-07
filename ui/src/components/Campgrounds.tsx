@@ -23,6 +23,7 @@ const Campgrounds: React.FC<Props> = ({search}) => {
 
     const renderCampgrounds = (campgrounds: Array<Campground>, search: string) => {
         let campgroundsJSX: Array<JSX.Element> = []
+        // find a list of campgrounds who's name includes the searched characters
         for(let camp = 0; camp < campgrounds.length; camp++) {
             if(campgrounds[camp].name.toLowerCase().includes(search))
                 campgroundsJSX.push(

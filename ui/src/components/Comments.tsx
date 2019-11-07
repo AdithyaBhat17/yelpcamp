@@ -47,6 +47,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
                 if(data && data.comment) {
                     setLoading({...loading, comment: false})
                     setComment('')
+                    // add the comment received from the backend to the comments array
                     _comments.unshift(data.comment)
                     setComments([..._comments])
                 } else if(data && data.isLoggedIn === false) {
@@ -74,6 +75,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
                 setLoading({...loading, button: false})
                 addToast(data.message, {appearance: 'success', autoDismiss: true})
                 _comments = _comments.filter(comment => comment._id !== id && comment)
+                // filter comments who's id does not match the deleted comment id and render them.
                 setComments([..._comments])
             } else if (data && data.isLoggedIn === false) {
                 addToast(data.message, {appearance: 'error', autoDismiss: true})

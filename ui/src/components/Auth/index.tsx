@@ -30,8 +30,11 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
         .then(res => res.json())
         .then(data => {
             if(data && data.success) {
-                sessionStorage.setItem('hello', data.username)
+                sessionStorage.setItem('hello', data.username) //set username in sessionStorage to show delete button
+                // to only the user who wrote the comment
+                // redirect the user to the previous page/home page after login
                 history.push(`${location.state ? location.state.from : '/'}`)
+                // clear error message 
                 setError('')
             } else
                 setError(data.err.message)

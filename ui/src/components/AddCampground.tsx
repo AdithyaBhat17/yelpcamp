@@ -13,12 +13,12 @@ const initialState = {
 
 const inputReducer = (state = initialState, action: { type: string, field: any }) => {
     switch(action.type) {
-        case 'input': 
+        case 'input': // input field
             return {
                 ...state,
                 [action.field.name]: action.field.value
             }
-        case 'file':   
+        case 'file': // file upload
             return {
                 ...state,
                 file: action.field
@@ -35,11 +35,13 @@ const AddCampground = ({history}: RouteComponentProps) => {
     const [state, dispatch] = useReducer(inputReducer, initialState)
     const [submit, setSubmit] = useState<boolean>(false)
 
+    // convert image to base64 format before uploading to cloudinary
     const toBase64 = (file: Blob) => {
         if(file === null)
             return
         const reader = new FileReader()
         reader.readAsDataURL(file)
+        // dispatch action once the file is loaded to add file to the state
         reader.onload = () => dispatch({type: 'file', field: reader.result})
         reader.onerror = error => console.log(error)
     }
@@ -51,7 +53,7 @@ const AddCampground = ({history}: RouteComponentProps) => {
             setError('Please fill all the fields!')
             return
         }
-        setSubmit(true)
+        setSubmit(true) // show loading ... on the submit button
         fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/`, {
             method: 'POST',
             credentials: 'include',
@@ -75,9 +77,11 @@ const AddCampground = ({history}: RouteComponentProps) => {
         })
     }
 
+    // show spinner until the data is fetched
     if(loading && !data) 
         return <IntersectingCirclesSpinner className="loading loading-2" color="#feca74" />
 
+    // redirect to login page if unauthorized
     if(data && data.isLoggedIn === false)
         return <Redirect to={{pathname: '/login', state: {from: '/add'}}} />
 
@@ -93,7 +97,9 @@ const AddCampground = ({history}: RouteComponentProps) => {
                             className="form-control campground-input" 
                             type="text" 
                             name="name" 
+                            // clear error message when an input field is focused
                             onFocus={() => error.length && setError('')}
+                            // dispatch action when the field changes.
                             onChange={(e) => dispatch({type: 'input', field: e.target})}
                             placeholder="Yosemite"
                             />
@@ -116,7 +122,6 @@ const AddCampground = ({history}: RouteComponentProps) => {
                             name="file" 
                             onFocus={() => error.length && setError('')}
                             onChange={(e) => e.target.files !== null && toBase64(e.target.files[0])}
-                            //  placeholder="https://domain.com/image.jpg"
                             />
                         </div>
                         <div className="form-group">

@@ -6,9 +6,7 @@ import Auth from './components/Auth'
 import AddCampground from './components/AddCampground'
 import { ToastProvider } from 'react-toast-notifications'
 
-// @todo create username context 
 export default () => {
-
     return (
         <ToastProvider>
             <Router>

@@ -15,6 +15,7 @@ const Campground = ({match, history, location}: RouteComponentProps<TParams>) =>
 
     const { addToast } = useToasts()
 
+    // delete campground if the user is authenticated and is the author of the comment.
     const deleteCampground = (id: string) => {
         fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${id}/delete`, {
             method: 'DELETE',
@@ -63,13 +64,14 @@ const Campground = ({match, history, location}: RouteComponentProps<TParams>) =>
                         {campground.description} <br/>
                         <small>- {campground.author}</small>
                     </p>
+                    {/* render comments for the campground */}
                     {campground.comments && 
                     <Comments
-                    comments={campground.comments} 
-                    campgroundName={campground.name}
-                    match={match}
-                    location={location}
-                    history={history}
+                     comments={campground.comments} 
+                     campgroundName={campground.name}
+                     match={match}
+                     location={location}
+                     history={history}
                     />}
                 </div>
             </div>

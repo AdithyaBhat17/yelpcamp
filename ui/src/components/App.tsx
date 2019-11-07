@@ -20,6 +20,7 @@ const App: React.FC<State> = () => {
         <h1 className="welcome-h1">
           Welcome to Yelpcamp!
         </h1>
+        {/* search input  */}
         <input
          className="form-control search" 
          type="text" 
@@ -27,6 +28,7 @@ const App: React.FC<State> = () => {
          onChange={(event) => handleInputChange(event.target.value)}
         />
       </div>
+      {/* render campgrounds */}
       <Campgrounds search={search}/>      
       <Link to="/add">
         <button className="add-btn-widget">
