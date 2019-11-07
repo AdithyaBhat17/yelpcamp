@@ -7,9 +7,6 @@ var express     = require("express"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"), // using to support PUT method.
     cors = require('cors'),
-    // passportLocalMongoose = require("passport-local-mongoose"),
-    // Campground  = require("./models/campground"),
-    // Comment     = require("./models/comment"),
     User        = require("./models/user");
     // seedDB      = require("./seeds");
 
@@ -17,7 +14,6 @@ var commentRoutes    = require("./routes/comments"),
     campgroundRoutes = require("./routes/campgrounds"),
     indexRoutes      = require("./routes/index");
 
-// mongoose.connect("mongodb://localhost/yelp_camp");
 mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
