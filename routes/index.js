@@ -8,7 +8,7 @@ router.post("/signup", function(req, res){
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            res.send({success: false, err});
+            res.status(400).send({success: false, err});
         } else {
           passport.authenticate("local")(req, res, function(){
               res.send({success: true, username: req.body.username});
