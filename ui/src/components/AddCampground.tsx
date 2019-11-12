@@ -57,9 +57,6 @@ const AddCampground = ({history}: RouteComponentProps) => {
         fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/`, {
             method: 'POST',
             credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({name, file, description, price})
         })
         .then(res => res.json())

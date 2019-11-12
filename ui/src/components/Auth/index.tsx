@@ -22,9 +22,6 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
         fetch(`${process.env.REACT_APP_BASE_URL}/${purpose}/`, {
             method: 'POST',
             credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({username, password})
         })
         .then(res => res.json())
