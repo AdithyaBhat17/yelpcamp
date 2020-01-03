@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 
 const { isLoggedIn, isValidId } = require('../middlewares');
 const Comment = require('../models/comment');
@@ -8,9 +7,9 @@ const Campground = require('../models/campground');
 const router = express.Router();
 
 // Add a comment
-router.post('/', [isLoggedIn, isValidId], async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
   try {
-    const campground = await Campground.findOne({ _id: req.params.id });
+    const campground = await Campground.findOne({ _id: req.body.campgroundId });
     if (!campground) {
       return res
         .status(400)
@@ -31,25 +30,16 @@ router.post('/', [isLoggedIn, isValidId], async (req, res) => {
 });
 
 // Delete a comment
-router.delete('/:commentId', isLoggedIn, async (req, res) => {
+router.delete('/:id', [isLoggedIn, isValidId], async (req, res) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(req.params.commentId)) {
-      return res.status(400).send({ success: false, message: 'Invalid ID' });
-    }
-
-    const campground = await Campground.findOne({ _id: req.params.id });
-    if (!campground) {
-      return res
-        .status(400)
-        .send({ success: false, message: 'Invalid campground' });
-    }
-
-    const comment = await Comment.findOne({ _id: req.params.commentId });
+    const comment = await Comment.findOne({ _id: req.params.id });
     if (!comment) {
       return res
         .status(404)
         .send({ success: false, message: 'Comment not found' });
     }
+
+    const campground = await Campground.findOne({ comments: req.params.id });
 
     if (comment.author !== req.user.username) {
       return res.status(403).send({
@@ -58,8 +48,8 @@ router.delete('/:commentId', isLoggedIn, async (req, res) => {
       });
     }
 
-    const index = campground.comments.indexOf(comment._id);
-    if (index > -1) {
+    if (campground) {
+      const index = campground.comments.indexOf(comment._id);
       campground.comments.splice(index, 1);
       await Promise.all([comment.remove(), campground.save()]);
     } else {
