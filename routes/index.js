@@ -1,39 +1,51 @@
-var express = require("express");
-var router  = express.Router();
-var passport = require("passport");
-var User = require("../models/user");
+const express = require('express');
+const passport = require('passport');
 
-//handle sign up logic
-router.post("/signup", function(req, res){
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
-        if(err){
-            res.status(400).send({success: false, err});
-        } else {
-          passport.authenticate("local")(req, res, function(){
-              res.send({success: true, username: req.body.username});
-          });
-        }
-    });
+const User = require('../models/user');
+
+const router = express.Router();
+
+// Handle sign up logic
+router.post('/signup', async (req, res) => {
+  try {
+    let user = User.findOne({ username: req.body.username });
+    if (!user) {
+      user = new User({ username: req.body.username });
+      await user.setPassword(req.body.password);
+      await user.save();
+    }
+
+    const { user: loggedInUser, error } = await User.authenticate()(
+      req.body.username,
+      req.body.password
+    );
+    if (error) {
+      return res.status(403).send({ success: false, message: error.message });
+    }
+
+    res.send({ success: true, username: loggedInUser.username });
+  } catch (err) {
+    res.status(500).send({ success: false, message: 'Something went wrong.' });
+  }
 });
 
-router.get('/', function(_req, res) {
-    res.status(200).send('Hello bot!!')
-})
-
-//handling login logic
-router.post("/login", passport.authenticate("local"), function(req, res){
-  res.send({success: true, username: req.body.username})
+router.get('/', (req, res) => {
+  res.send('Hello bot!!');
 });
 
-// logout route
-router.get("/logout", function(req, res){
-   req.logout();
-   res.send({success: true, message: 'Successfully Logged Out!'});
+// Handling login
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  res.send({ success: true, username: req.user.username });
 });
 
-router.get('/authorized', function(req, res) {
-    res.send({isLoggedIn: req.isAuthenticated()});
+// Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.send({ success: true, message: 'Successfully logged out!' });
+});
+
+router.get('/authorized', (req, res) => {
+  res.send({ isLoggedIn: req.isAuthenticated() });
 });
 
 module.exports = router;
