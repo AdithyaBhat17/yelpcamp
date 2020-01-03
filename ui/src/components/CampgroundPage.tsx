@@ -19,10 +19,7 @@ const Campground = ({match, history, location}: RouteComponentProps<TParams>) =>
     const deleteCampground = (id: string) => {
         fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${id}/delete`, {
             method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            credentials: 'include'
         })
         .then(res => res.json())
         .then(data => {

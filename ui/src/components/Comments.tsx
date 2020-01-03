@@ -64,10 +64,7 @@ const Comments: React.FunctionComponent<Comments> = ({comments, campgroundName, 
         setLoading({...loading, button: true})
         fetch(`${process.env.REACT_APP_BASE_URL}/campgrounds/${match.params.id}/comments/${id}`, {
             method: 'DELETE',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            credentials: 'include'
         })
         .then(res => res.json())
         .then(data => {

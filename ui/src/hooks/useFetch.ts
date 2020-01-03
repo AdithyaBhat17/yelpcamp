@@ -13,10 +13,7 @@ export const useFetch = (url: string) => {
         fetch(url, { 
             method: 'GET',
             signal: abortController.signal,
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            credentials: 'include'
         })
         .then(response => response.json())
         // where the magic happens

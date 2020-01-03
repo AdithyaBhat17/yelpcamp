@@ -19,7 +19,7 @@ const Auth: React.FC<Props> = ({purpose, history, location}) => {
             setError('Username / Password is empty :(')
             return
         }
-        fetch(`${process.env.REACT_APP_BASE_URL}/${purpose}/`, {
+        fetch(`${process.env.REACT_APP_BASE_URL}/${purpose}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
