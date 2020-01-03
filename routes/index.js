@@ -6,26 +6,22 @@ const router = express.Router();
 
 // Handle sign up
 router.post('/signup', async (req, res) => {
-  try {
-    let user = User.findOne({ username: req.body.username });
-    if (!user) {
-      user = new User({ username: req.body.username });
-      await user.setPassword(req.body.password);
-      await user.save();
-    }
-
-    const { user: loggedInUser, error } = await User.authenticate()(
-      req.body.username,
-      req.body.password
-    );
-    if (error) {
-      return res.status(403).send({ success: false, message: error.message });
-    }
-
-    res.send({ success: true, username: loggedInUser.username });
-  } catch (err) {
-    res.status(500).send({ success: false, message: 'Something went wrong.' });
+  let user = User.findOne({ username: req.body.username });
+  if (!user) {
+    user = new User({ username: req.body.username });
+    await user.setPassword(req.body.password);
+    await user.save();
   }
+
+  const { user: loggedInUser, error } = await User.authenticate()(
+    req.body.username,
+    req.body.password
+  );
+  if (error) {
+    return res.status(403).send({ success: false, message: error.message });
+  }
+
+  res.send({ success: true, username: loggedInUser.username });
 });
 
 router.get('/', (req, res) => {
@@ -34,19 +30,15 @@ router.get('/', (req, res) => {
 
 // Handling login
 router.post('/login', async (req, res) => {
-  try {
-    const { user, error } = await User.authenticate()(
-      req.body.username,
-      req.body.password
-    );
-    if (error) {
-      return res.status(403).send({ success: false, message: error.message });
-    }
-
-    res.send({ success: true, username: user.username });
-  } catch (err) {
-    res.status(500).send({ success: false, message: err.message });
+  const { user, error } = await User.authenticate()(
+    req.body.username,
+    req.body.password
+  );
+  if (error) {
+    return res.status(403).send({ success: false, message: error.message });
   }
+
+  res.send({ success: true, username: user.username });
 });
 
 // Logout

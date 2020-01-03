@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
+require('express-async-errors');
 const expressSession = require('express-session');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
@@ -55,6 +56,10 @@ app.use(function(req, res, next) {
 app.use('/', require('./routes/index'));
 app.use('/campgrounds', require('./routes/campgrounds'));
 app.use('/comments', require('./routes/comments'));
+
+app.use(function(err, req, res) {
+  res.status(500).send({ success: false, message: err.message });
+});
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
