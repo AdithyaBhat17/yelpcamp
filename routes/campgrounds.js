@@ -56,7 +56,7 @@ router.get('/:id', isValidId, async (req, res) => {
         .send({ success: false, message: 'Campground not found' });
     }
 
-    res.send({ success: true, campground });
+    res.send(campground);
   } catch (err) {
     res.status(500).send({ success: false, err });
   }
