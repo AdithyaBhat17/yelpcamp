@@ -1,11 +1,10 @@
 const express = require('express');
-const passport = require('passport');
 
 const User = require('../models/user');
 
 const router = express.Router();
 
-// Handle sign up logic
+// Handle sign up
 router.post('/signup', async (req, res) => {
   try {
     let user = User.findOne({ username: req.body.username });
@@ -34,8 +33,20 @@ router.get('/', (req, res) => {
 });
 
 // Handling login
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  res.send({ success: true, username: req.user.username });
+router.post('/login', async (req, res) => {
+  try {
+    const { user, error } = await User.authenticate()(
+      req.body.username,
+      req.body.password
+    );
+    if (error) {
+      return res.status(403).send({ success: false, message: error.message });
+    }
+
+    res.send({ success: true, username: user.username });
+  } catch (err) {
+    res.status(500).send({ success: false, message: err.message });
+  }
 });
 
 // Logout
