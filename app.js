@@ -18,8 +18,8 @@ mongoose.connect(process.env.DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors({credentials: true, origin: process.env.BASE_URL}))
 // seedDB(); // use this to fill your db with default data.
 
