@@ -4,8 +4,6 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
 
 module.exports = function(app) {
   app.use(bodyParser.json({ limit: '50mb' }));
@@ -21,16 +19,7 @@ module.exports = function(app) {
   );
   app.use(methodOverride('_method'));
 
-  // Configure passport middleware
-  app.use(passport.initialize());
-  app.use(passport.session());
-
-  // Configure passport-local
-  const User = require('../models/user');
-  passport.use(new LocalStrategy(User.authenticate()));
-
-  passport.serializeUser(User.serializeUser());
-  passport.deserializeUser(User.deserializeUser());
+  require('./passport')(app);
 
   app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
