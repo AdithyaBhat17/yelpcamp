@@ -1,11 +1,11 @@
 body {
   margin: 0;
-  font-family: -apple-system, 'Nunito', BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, 'Nunito', BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #1F1F25;
+  background-color: #1f1f25;
   color: #fff;
 }
 
@@ -37,7 +37,7 @@ img {
   font-size: 4em;
   font-weight: bold;
   font-family: 'Montserrat';
-  color: #FECA76;
+  color: #feca76;
 }
 
 .search {
@@ -88,7 +88,7 @@ img {
   background-color: #feca76;
 }
 
-.add-btn-widget > a {  
+.add-btn-widget > a {
   color: #1f1f25;
 }
 
@@ -103,12 +103,13 @@ img {
   width: 100%;
 }
 
-.form-control, .form-control:focus {
+.form-control,
+.form-control:focus {
   border: none;
   border-radius: 0;
   color: #f3f3f3;
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
-  border-bottom: 2px solid #FECA76ff;
+  border-bottom: 2px solid #feca76ff;
   background-color: #1f1f25;
 }
 
@@ -117,7 +118,8 @@ img {
   border-radius: 10px;
 }
 
-.campground-name, h4 {
+.campground-name,
+h4 {
   font-family: 'Montserrat';
   letter-spacing: 1px;
 }
@@ -139,7 +141,7 @@ img {
 }
 
 .comment-btn {
-  color: #1F1F25;
+  color: #1f1f25;
   background-color: #feca76;
   border-radius: 5px;
   font-weight: bold;
@@ -161,14 +163,16 @@ img {
   margin-bottom: 5px;
 }
 
-.delete-btn, .delete-btn:disabled {
+.delete-btn,
+.delete-btn:disabled {
   background-color: #feca76;
   border-radius: 5px;
   border: none;
   color: #1f1f25;
   box-shadow: 5px 5px 25px 0 rgba(0, 0, 0, 0.07);
   padding: 5px 10px;
-}.delete-btn:disabled {
+}
+.delete-btn:disabled {
   opacity: 0.3;
 }
 
@@ -184,7 +188,8 @@ img {
   margin: 15vh auto;
 }
 
-.auth-form, .campground-form > form {
+.auth-form,
+.campground-form > form {
   margin: 0 auto;
   /* width: 30%; */
 }
@@ -207,13 +212,14 @@ small {
   color: #feca76;
 }
 
-input[type="file"]::-webkit-file-upload-button {
+input[type='file']::-webkit-file-upload-button {
   background-color: #1f1f25;
   color: #feca76;
   border: 2px solid #feca76;
   padding: 5px 10px;
   border-radius: 5px;
-}input[type="file"] {
+}
+input[type='file'] {
   border: none;
   padding: 0;
 }
@@ -222,7 +228,8 @@ input[type="file"]::-webkit-file-upload-button {
   margin-top: 15vh;
 }
 
-.campground-input, .camp-btn {
+.campground-input,
+.camp-btn {
   width: 90%;
 }
 
@@ -250,7 +257,8 @@ input[type="file"]::-webkit-file-upload-button {
 }
 
 @media only screen and (max-width: 768px) {
-  .search, .empty {
+  .search,
+  .empty {
     width: 70%;
   }
   .welcome-h1 {
@@ -259,10 +267,10 @@ input[type="file"]::-webkit-file-upload-button {
   .campground-cards {
     background-color: #1f1f25 !important;
     color: #fff;
-    border: 2px solid #feca76
+    border: 2px solid #feca76;
   }
   .unsplash_background {
-    padding-bottom: 10px 
+    padding-bottom: 10px;
   }
   .add-btn-widget {
     bottom: 2%;
@@ -276,14 +284,16 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .login {
     margin: 40px auto;
-  }.auth-h1 {
+  }
+  .auth-h1 {
     margin: 15px auto;
     font-size: 2.25em;
   }
   .tourist-img {
     margin: 0 auto;
   }
-  .campground-input, .camp-btn {
+  .campground-input,
+  .camp-btn {
     width: 100%;
   }
 }
@@ -297,7 +307,8 @@ input[type="file"]::-webkit-file-upload-button {
 @media only screen and (min-width: 769px) and (max-width: 991px) {
   .login {
     margin: 10vh auto;
-  }.auth-h1 {
+  }
+  .auth-h1 {
     margin: 15px auto;
   }
 }
@@ -308,7 +319,8 @@ input[type="file"]::-webkit-file-upload-button {
   }
   .camp-h1 {
     margin: 15vh auto 20px;
-  }.tourist-img {
+  }
+  .tourist-img {
     margin: 20vh auto 0;
   }
 }
