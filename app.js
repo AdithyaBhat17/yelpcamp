@@ -14,6 +14,9 @@ const app = express();
 // Logging for unhandled exceptions outside express
 require('./services/logging')();
 
+// Exit if no config set
+require('./services/config')();
+
 // Database connection
 require('./services/db')();
 
