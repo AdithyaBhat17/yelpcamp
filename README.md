@@ -51,7 +51,7 @@ Feel free to contribute to the repository by sending a Pull Request.
 * [x] - style the application (micro-interactions included)
 * [x] - handle auth errors in the UI
 * [ ] - add a 404 page
-* [ ] - refactor backend code
+* [x] - refactor backend code
 
 ## License
 
