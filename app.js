@@ -15,6 +15,10 @@ const app = express();
 require('./services/db')();
 
 // App middlewares
+if (process.env.NODE_ENV === 'production') {
+  // Production only middlewares
+  require('./services/prod')(app);
+}
 require('./services/routes')(app);
 
 const port = process.env.PORT || 8080;
