@@ -11,6 +11,9 @@ const LocalStrategy = require('passport-local');
 
 const app = express();
 
+// Logging for unhandled exceptions outside express
+require('./services/logging')();
+
 // Database connection
 require('./services/db')();
 
