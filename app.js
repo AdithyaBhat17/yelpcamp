@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cors({ credentials: true, origin: process.env.BASE_URL }));
 app.use(
   expressSession({
-    secret: 'Puta Madrid',
+    secret: 'secret',
     resave: false,
     saveUninitialized: false
   })
