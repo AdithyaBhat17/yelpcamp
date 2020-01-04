@@ -1,7 +1,10 @@
-var Campground = require('./models/campground');
-var Comment = require('./models/comment');
+require('dotenv').config();
+const mongoose = require('mongoose');
 
-var data = [
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
+
+const data = [
   {
     name: "Cloud's Rest",
     image: 'https://farm4.staticflickr.com/3795/10131087094_c1c0a1c859.jpg',
@@ -25,47 +28,26 @@ var data = [
   }
 ];
 
-function seedDB() {
-  //Remove all campgrounds
-  Campground.deleteMany({}, function(err) {
-    if (err) {
-      console.log(err);
-    }
-    console.log('removed campgrounds!');
-    Comment.deleteMany({}, function(err) {
-      if (err) {
-        console.log(err);
-      }
-      console.log('removed comments!');
-      //add a few campgrounds
-      data.forEach(function(seed) {
-        Campground.create(seed, function(err, campground) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('added a campground');
-            //create a comment
-            Comment.create(
-              {
-                text: 'This place is great, but I wish there was internet',
-                author: 'Homer'
-              },
-              function(err, comment) {
-                if (err) {
-                  console.log(err);
-                } else {
-                  campground.comments.push(comment._id);
-                  campground.save();
-                  console.log('Created new comment');
-                }
-              }
-            );
-          }
-        });
-      });
-    });
+async function seed() {
+  await mongoose.connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
   });
-  //add a few comments
+
+  await Campground.deleteMany({});
+  await Comment.deleteMany({});
+
+  for (let item of data) {
+    const campground = new Campground(item);
+    const comment = new Comment({
+      text: 'This place is great, but I wish there was internet',
+      author: 'Homer'
+    });
+    campground.comments.push(comment._id);
+    await Promise.all([campground.save(), comment.save()]);
+  }
+
+  mongoose.disconnect();
 }
 
-module.exports = seedDB;
+seed();
