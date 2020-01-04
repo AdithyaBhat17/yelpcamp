@@ -12,16 +12,7 @@ const LocalStrategy = require('passport-local');
 const app = express();
 
 // Database connection
-mongoose
-  .connect(process.env.DB_URL, {
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log('Connected to MongoDB');
-  });
+require('./services/db')();
 
 // App middlewares
 app.use(bodyParser.json({ limit: '50mb' }));
