@@ -21,12 +21,12 @@ BASE_URL = http://localhost:3000
 
 * create an account at [cloudinary.com](https://cloudinary.com) and create a folder called campgrounds. Copy/paste your cloudinary credentials to the .env file
 
-```.env
-DB_URL = mongodb://<dbuser>:<dbpassword>@ds111476.mlab.com:11476/<db_name>
-BASE_URL = http://localhost:3000
-cloud_name = <cloud_name_here>
-api_key = <api_key_here>
-api_secret = <api_secret>
+```bash
+DB_URL='mongodb://<dbuser>:<dbpassword>@ds111476.mlab.com:11476/<db_name>'
+BASE_URL='http://localhost:3000'
+cloud_name='<cloud_name_here>'
+api_key='<api_key_here>'
+api_secret='<api_secret>'
 ```
 
 * run the seeds file to create dummy data. - `npm run seed`
@@ -37,8 +37,8 @@ api_secret = <api_secret>
 * Open a new terminal window and move to the *ui* folder and install dependencies - `cd ui && npm install`
 * create a `.env` file in the root of `ui/` and add the following inside it
 
-```.env
-REACT_APP_BASE_URL = http://localhost:8080
+```bash
+REACT_APP_BASE_URL='http://localhost:8080'
 ```
 
 * start the server - `npm start`
