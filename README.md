@@ -29,9 +29,7 @@ api_key = <api_key_here>
 api_secret = <api_secret>
 ```
 
-* go to [`app.js`](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js) and uncomment lines [11](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js#L11) and [24](https://github.com/AdithyaBhat17/yelpcamp/blob/master/app.js#L11) and run `node app.js` to create dummy campgrounds data.
-* comment back the seedDB() code.
-    `// seedDB()`
+* run the seeds file to create dummy data. - `npm run seed`
 * now start the server - `npm start`
 
 ### Setup the front-end server
