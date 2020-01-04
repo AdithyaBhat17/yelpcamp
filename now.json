@@ -1,11 +1,11 @@
 {
-    "name": "yelpcamp",
-    "version": 1,
-    "env": {
-        "cloud_name": "@cloud_name",
-        "api_key": "@api_key",
-        "api_secret": "@api_secret",
-        "BASE_URL": "@base_url",
-        "DB_URL": "@db_url"
-    }
+  "name": "yelpcamp",
+  "version": 1,
+  "env": {
+    "cloud_name": "@cloud_name",
+    "api_key": "@api_key",
+    "api_secret": "@api_secret",
+    "BASE_URL": "@base_url",
+    "DB_URL": "@db_url"
+  }
 }

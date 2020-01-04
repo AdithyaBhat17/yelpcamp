@@ -1,54 +1,67 @@
-require('dotenv').config()
-var express     = require("express"),
-    app         = express(),
-    bodyParser  = require("body-parser"),
-    mongoose    = require("mongoose"),
-    passport    = require("passport"),
-    LocalStrategy = require("passport-local"),
-    methodOverride = require("method-override"), // using to support PUT method.
-    cors = require('cors'),
-    User        = require("./models/user");
-    // seedDB      = require("./seeds");
+require('dotenv').config();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const express = require('express');
+require('express-async-errors');
+const expressSession = require('express-session');
+const methodOverride = require('method-override');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 
-var commentRoutes    = require("./routes/comments"),
-    campgroundRoutes = require("./routes/campgrounds"),
-    indexRoutes      = require("./routes/index");
+const app = express();
 
-mongoose.connect(process.env.DB_URL, {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-});
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors({credentials: true, origin: process.env.BASE_URL}))
-// seedDB(); // use this to fill your db with default data.
+// Database connection
+mongoose
+  .connect(process.env.DB_URL, {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log('Connected to MongoDB');
+  });
 
-//passport config
+// App middlewares
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(cors({ credentials: true, origin: process.env.BASE_URL }));
+app.use(
+  expressSession({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(methodOverride('_method'));
 
-app.use(require("express-session")({
-    secret:"Puta Madrid",
-    resave:false,
-    saveUninitialized:false
-}));
+// Configure passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Configure passport-local
+const User = require('./models/user');
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-app.use(methodOverride("_method"));
 
-app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    next();
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
 });
 
-app.use("/", indexRoutes);
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
+// Register routes
+app.use('/', require('./routes/index'));
+app.use('/campgrounds', require('./routes/campgrounds'));
+app.use('/comments', require('./routes/comments'));
 
+app.use(function(err, req, res) {
+  res.status(500).send({ success: false, message: err.message });
+});
 
-
-
-app.listen(process.env.PORT || 8080, function(){
-   console.log("The YelpCamp Server Has Started!");
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log('YelpCamp server is listening on port ' + port);
 });

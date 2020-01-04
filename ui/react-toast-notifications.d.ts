@@ -1,1 +1,1 @@
-declare module 'react-toast-notifications'
+declare module 'react-toast-notifications';
