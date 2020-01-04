@@ -8,7 +8,7 @@ YelpCamp is a dynamic website which provides information about campgrounds
 
 ### Setup the backend server
 
-Requirements - Node.js, npm, nodemon (`npm i -g nodemon`)
+Requirements - Node.js, NPM
 
 * install the required dependencies - `npm install`
 * create an account at [mlab.com](https://mlab.com) and create a database with aws cloud us-east-1.
